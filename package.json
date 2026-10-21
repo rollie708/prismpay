@@ -1,0 +1,30 @@
+{
+  "name": "paynexis",
+  "version": "2.0.0",
+  "type": "module",
+  "private": true,
+  "engines": { "node": ">=22" },
+  "description": "Paynexis - Commerce, Powered On-Chain",
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env server/local.js",
+    "start": "node --env-file-if-exists=.env server/local.js",
+    "test": "node --test --test-concurrency=1 tests/*.test.js",
+    "migrate": "node --env-file-if-exists=.env scripts/migrate.js",
+    "admin": "node --env-file-if-exists=.env scripts/admin.js",
+    "build": "node scripts/build.js"
+  },
+  "dependencies": {
+    "connect-pg-simple": "^10.0.0",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "helmet": "^8.1.0",
+    "openid-client": "^6.8.1",
+    "pg": "^8.16.3",
+    "stripe": "^19.1.0",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": { "@electric-sql/pglite": "^0.3.14", "supertest": "^7.1.4", "@playwright/test": "^1.56.1" },
+  "keywords": ["crypto", "commerce", "blockchain", "web3"],
+  "author": "Paynexis Labs",
+  "license": "MIT"
+}

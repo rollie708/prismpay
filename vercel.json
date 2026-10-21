@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/index.js": { "includeFiles": "{views/**,index.html,styles.css,script.js,whitepaper.html,whitepaper.css,whitepaper.js,product.css,website.css,app.js,logo.svg}", "maxDuration": 30 }
+  },
+  "rewrites": [{ "source": "/(.*)", "destination": "/api/index" }]
+}

@@ -1,0 +1,92 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { randomUUID } from 'node:crypto';
+import request from 'supertest';
+import { fixture,authorized,listing,paymentFixture } from './helpers.js';
+import { recordVerifiedPayment,beginCheckout } from '../server/payments.js';
+
+test('catalog lifecycle, publish validation, search, merchant privacy, authorization and audit',async t=>{
+  const f=await fixture();t.after(f.close);
+  assert.deepEqual((await request(f.app).get('/api/commerce/products')).body.products,[]);
+  await request(f.app).post('/api/admin/products').set('Origin',f.config.origin).send({}).expect(401);
+  await authorized(request(f.app).post('/api/admin/products'),'customer').send({}).expect(403);
+  await request(f.app).post('/api/admin/products').set('x-test-user','admin').set('Origin',f.config.origin).send({}).expect(403);
+  await authorized(request(f.app).post('/api/admin/products')).set('Origin','https://attacker.test').send({}).expect(403);
+  const m={name:'Test-only merchant',contact_email:'private@example.test',verified:false,active:true};
+  const merchant=await authorized(request(f.app).post('/api/admin/merchants')).send(m).expect(201);
+  const p={name:'Test-only listing',description:'Server-validated fixture',kind:'service',price_minor:4200,currency:'USD',status:'published',merchant_id:merchant.body.id,fulfillment_method:'manual',requirements:'Manual delivery after payment'};
+  await authorized(request(f.app).post('/api/admin/products')).send(p).expect(400);
+  await authorized(request(f.app).put(`/api/admin/merchants/${merchant.body.id}`)).send({...m,verified:true}).expect(200);
+  await authorized(request(f.app).post('/api/admin/products')).send({...p,price_minor:-1}).expect(400);
+  await authorized(request(f.app).post('/api/admin/products')).send({...p,fulfillment_method:'none'}).expect(400);
+  const created=await authorized(request(f.app).post('/api/admin/products')).send(p).expect(201);
+  const catalog=await request(f.app).get('/api/commerce/products?q=validated&kind=service').expect(200);
+  assert.equal(catalog.body.products.length,1);assert.ok(!JSON.stringify(catalog.body).includes('private@example.test'));
+  assert.equal((await request(f.app).get('/api/commerce/products?q=no-match')).body.products.length,0);
+  const detail=await request(f.app).get(`/api/commerce/products/${created.body.id}`).expect(200);
+  assert.equal(detail.body.checkoutAvailable,false);
+  await authorized(request(f.app).put(`/api/admin/products/${created.body.id}`)).send({...p,status:'archived'}).expect(200);
+  await request(f.app).get(`/api/commerce/products/${created.body.id}`).expect(404);
+  const audit=await authorized(request(f.app).get('/api/admin/audit')).expect(200);
+  assert.equal(audit.body.events.length,4);
+});
+test('disabled checkout and arbitrary transaction hashes cannot create paid orders',async t=>{
+  const f=await fixture();t.after(f.close);
+  const {productId}=await listing(f.db);
+  await authorized(request(f.app).post('/api/commerce/checkout'),'customer').set('Idempotency-Key',randomUUID()).send({productId,transactionHash:'0xfake',paid:true}).expect(503);
+  assert.equal((await f.db.query('SELECT count(*) FROM orders')).rows[0].count,0);
+  const methods=await request(f.app).get('/api/commerce/methods').expect(200);
+  assert.deepEqual(methods.body.methods,[]);assert.equal(methods.body.onchain.available,false);
+});
+test('trusted payment verification rejects mismatches and records exactly one order on replay',async t=>{
+  const f=await fixture();t.after(f.close);
+  const {id,session}=await paymentFixture(f.db,f.users.customer.id);
+  assert.deepEqual(await recordVerifiedPayment(f.db,{...session,payment_status:'unpaid'},null,false),{status:'pending'});
+  const cases=[{amount_total:1},{currency:'eur'},{client_reference_id:randomUUID()},{livemode:true},{metadata:{...session.metadata,user_id:f.users.other.id}},{payment_intent:{...session.payment_intent,status:'requires_payment_method'}},{payment_intent:{...session.payment_intent,amount_received:1}},{payment_intent:'pi_forged'}];
+  for(const patch of cases)await assert.rejects(recordVerifiedPayment(f.db,{...session,...patch},null,false),/verification failed/);
+  assert.equal((await f.db.query('SELECT count(*) FROM orders')).rows[0].count,0);
+  await recordVerifiedPayment(f.db,session,'evt_fixture',false);
+  await recordVerifiedPayment(f.db,session,'evt_fixture',false);
+  await recordVerifiedPayment(f.db,session,'evt_fixture_second',false);
+  await recordVerifiedPayment(f.db,session,null,false);
+  const orders=(await f.db.query('SELECT * FROM orders')).rows;
+  assert.equal(orders.length,1);assert.equal(orders[0].payment_attempt_id,id);
+  assert.equal(orders[0].fulfillment_status,'pending');
+});
+test('orders are owner-scoped and fulfillment is authorized, auditable and idempotent',async t=>{
+  const f=await fixture();t.after(f.close);
+  const {session}=await paymentFixture(f.db,f.users.customer.id);
+  const {orderId}=await recordVerifiedPayment(f.db,session,null,false);
+  await request(f.app).get(`/api/commerce/orders/${orderId}`).expect(401);
+  await authorized(request(f.app).get(`/api/commerce/orders/${orderId}`),'other').expect(404);
+  assert.deepEqual((await authorized(request(f.app).get('/api/commerce/orders'),'other')).body.orders,[]);
+  await authorized(request(f.app).get(`/api/commerce/orders/${orderId}`),'customer').expect(200);
+  await authorized(request(f.app).post(`/api/admin/orders/${orderId}/fulfill`),'customer').send({note:'Forged delivery'}).expect(403);
+  for(let i=0;i<2;i++)await authorized(request(f.app).post(`/api/admin/orders/${orderId}/fulfill`)).send({note:'Fixture manually delivered'}).expect(200);
+  assert.equal((await f.db.query('SELECT count(*) FROM fulfillment_events')).rows[0].count,1);
+  assert.equal((await f.db.query("SELECT count(*) FROM audit_logs WHERE action='order.fulfilled'")).rows[0].count,1);
+  const receipt=await authorized(request(f.app).get(`/api/commerce/orders/${orderId}`),'customer').expect(200);
+  assert.equal(receipt.body.order.fulfillment_note,'Fixture manually delivered');
+});
+test('checkout idempotency freezes prices, prevents conflicting reuse, and records no order before verification',async t=>{
+  const f=await fixture();t.after(f.close);
+  const {productId}=await listing(f.db);let creates=0;
+  const sessions=new Map();
+  const stripe={checkout:{sessions:{create:async(input,{idempotencyKey})=>{
+    creates++;assert.equal(input.line_items[0].price_data.unit_amount,2500);
+    const session={id:`cs_${idempotencyKey}`,status:'open',url:'https://checkout.stripe.com/test-only'};sessions.set(session.id,session);return session;
+  },retrieve:async id=>sessions.get(id)}}};
+  const key=randomUUID();
+  const first=await beginCheckout(f.db,stripe,f.users.customer.id,productId,key,f.config.origin);
+  await f.db.query('UPDATE products SET price_minor=3000 WHERE id=$1',[productId]);
+  const replay=await beginCheckout(f.db,stripe,f.users.customer.id,productId,key,f.config.origin);
+  assert.equal(first.attemptId,replay.attemptId);assert.equal(creates,1);
+  await assert.rejects(beginCheckout(f.db,stripe,f.users.customer.id,randomUUID(),key,f.config.origin),/different product/);
+  assert.equal((await f.db.query('SELECT count(*) FROM orders')).rows[0].count,0);
+});
+test('payment webhook rejects forged signatures; sensitive endpoints are rate limited',async t=>{
+  const f=await fixture({payments:true});t.after(f.close);
+  await request(f.app).post('/api/payments/webhook').set('Content-Type','application/json').set('stripe-signature','fake').send('{"type":"checkout.session.completed"}').expect(400);
+  for(let i=0;i<10;i++)await authorized(request(f.app).patch('/api/commerce/account'),'customer').send({name:'Updated fixture'}).expect(200);
+  await authorized(request(f.app).patch('/api/commerce/account'),'customer').send({name:'Rate limited'}).expect(429);
+});
