@@ -1,43 +1,145 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Paynexis — Commerce, Powered On-Chain</title>
-  <meta name="description" content="Paynexis connects the vision of on-chain value with products, payments, and services. Initial network focus: Robinhood Chain.">
-  <link rel="icon" href="/logo.svg" type="image/svg+xml"><link rel="stylesheet" href="/product.css">
-   <link rel="stylesheet" href="/website.css">
-   <script src="/script.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PrismPay — Move value, not through hoops.</title>
+  <meta name="description" content="PrismPay is building a simpler way to pay across crypto, bringing asset conversion, payment routing, and cross-chain transfers into one experience.">
+  <meta name="theme-color" content="#070b18">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PrismPay — Move value, not through hoops.">
+  <meta property="og:description" content="One platform. Multiple payment rails. Fewer steps.">
+  <meta property="og:image" content="/logo.svg">
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/website.css">
+  <script src="/script.js" defer></script>
 </head>
-<body class="public-site">
-  <a class="skip" href="#main">Skip to content</a>
-  <header class="topbar"><a class="brand" href="/"><img src="/logo.svg" alt="" width="38" height="38">PAYNEXIS</a>
-    <nav aria-label="Main navigation"><a href="#vision">Vision</a><a href="/whitepaper.html">Whitepaper</a><a href="https://t.me/paynexislabs" target="_blank" rel="noopener noreferrer">Community ↗</a></nav>
-    <span class="badge" id="nav-status">Checking status</span>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <header class="site-header" id="top">
+    <div class="container nav-shell">
+      <a class="brand" href="#top" aria-label="PrismPay home">
+        <img src="/logo.svg" alt="" width="34" height="34">
+        <span>Prism<span>Pay</span></span>
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#how-it-works">How It Works</a>
+        <a href="#approach">What We're Building</a>
+        <a href="#vision">Vision</a>
+        <a href="#community">Community</a>
+      </nav>
+      <div class="header-actions">
+        <span class="coming-pill"><i></i>Product Coming Soon</span>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span><b class="sr-only">Open menu</b></button>
+      </div>
+    </div>
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+      <a href="#how-it-works">How It Works <span>↗</span></a>
+      <a href="#approach">What We're Building <span>↗</span></a>
+      <a href="#vision">Vision <span>↗</span></a>
+      <a href="#community">Community <span>↗</span></a>
+      <span class="coming-pill"><i></i>Product Coming Soon</span>
+    </nav>
   </header>
+
   <main id="main">
-    <div class="edition-line"><span>PAYNEXIS / COMMERCE INFRASTRUCTURE</span><span>BUILT AROUND POSSIBILITY</span></div>
-    <section class="launch-hero">
-      <div class="hero-copy"><p class="eyebrow">PAYMENTS / PRODUCTS / SERVICES</p>
-        <h1>Commerce,<br><span class="metal-text">Powered On-Chain.</span></h1>
-        <p class="lead">Digital value should do more than sit in a wallet. A new connection between assets and everyday commerce.</p>
-        <div class="launch-panel" aria-live="polite">
-          <div class="panel-label"><span class="status-dot"></span><span id="launch-label">Connecting to Paynexis</span></div>
-          <p id="launch-description">Checking trusted server time and service availability.</p>
-          <time id="launch-time"></time>
-          <div id="countdown" class="countdown" aria-label="Time until launch" hidden></div>
-          <div class="actions"><a class="button primary" id="enter-app" href="/app" hidden>Enter Paynexis <span>↗</span></a><button id="retry-status" hidden>Check status again</button><a class="text-link" href="https://t.me/paynexislabs" target="_blank" rel="noopener noreferrer">Join the community ↗</a></div>
+    <section class="hero section-grid container" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span>Crypto payments, reimagined</div>
+        <h1 id="hero-title">Move value.<br><em>Not through hoops.</em></h1>
+        <p class="hero-lede">PrismPay is building a simpler way to pay across crypto. Bring asset conversion, payment routing, and cross-chain transfers together through one unified experience.</p>
+        <div class="button-row">
+          <a class="button button-primary" href="#vision">Explore the Vision <span>↗</span></a>
+          <a class="button button-ghost" href="https://t.me/prismpayy" target="_blank" rel="noopener noreferrer">Join the Community <span>↗</span></a>
+        </div>
+        <div class="hero-note"><span class="live-dot"></span><span>Product coming soon</span><span class="note-rule"></span><span>One platform. Multiple rails.</span></div>
+      </div>
+      <div class="hero-visual" aria-label="Illustration of payment paths converging through a prism" role="img">
+        <div class="visual-label label-source">SOURCE NETWORKS <span>03</span></div>
+        <div class="visual-label label-dest">DESTINATIONS <span>02</span></div>
+        <svg class="route-art" viewBox="0 0 620 570" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="routeA" x1="58" y1="115" x2="525" y2="440" gradientUnits="userSpaceOnUse"><stop stop-color="#64F4DB" stop-opacity="0"/><stop offset=".48" stop-color="#64F4DB"/><stop offset="1" stop-color="#8B7CFF"/></linearGradient>
+            <linearGradient id="routeB" x1="55" y1="320" x2="549" y2="175" gradientUnits="userSpaceOnUse"><stop stop-color="#8B7CFF" stop-opacity="0"/><stop offset=".42" stop-color="#8B7CFF"/><stop offset="1" stop-color="#D5D6FF"/></linearGradient>
+            <linearGradient id="prismFace" x1="242" y1="115" x2="385" y2="437" gradientUnits="userSpaceOnUse"><stop stop-color="#F2F6FF" stop-opacity=".95"/><stop offset=".36" stop-color="#94E5E8" stop-opacity=".45"/><stop offset="1" stop-color="#7163E9" stop-opacity=".2"/></linearGradient>
+            <filter id="glow"><feGaussianBlur stdDeviation="7" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <circle cx="310" cy="285" r="190" stroke="#8797D8" stroke-opacity=".09"/>
+          <circle cx="310" cy="285" r="142" stroke="#8797D8" stroke-opacity=".11" stroke-dasharray="2 11"/>
+          <path class="route route-one" d="M35 112 C130 112 168 170 249 235 C278 258 291 273 310 286 C351 315 393 385 580 436" stroke="url(#routeA)" stroke-width="1.5"/>
+          <path class="route route-two" d="M35 321 C140 321 179 284 249 258 C274 249 295 235 310 219 C344 185 407 154 580 152" stroke="url(#routeB)" stroke-width="1.5"/>
+          <path class="route route-three" d="M78 485 C160 474 193 403 247 332 C280 288 291 280 310 286 C348 298 390 318 469 314 C514 312 544 295 580 273" stroke="#9FA5D8" stroke-opacity=".45" stroke-width="1"/>
+          <path class="route route-four" d="M110 48 C175 75 203 148 252 221 C278 260 292 276 310 286 C365 317 401 422 501 500" stroke="#64F4DB" stroke-opacity=".44" stroke-width="1" stroke-dasharray="2 9"/>
+          <path d="M310 105 L390 190 L390 380 L310 465 L230 380 L230 190 Z" fill="#0E1730" fill-opacity=".72" stroke="#C6D5FF" stroke-opacity=".34"/>
+          <path d="M310 105 L390 190 L310 286 L230 190 Z" fill="url(#prismFace)" fill-opacity=".8"/>
+          <path d="M230 190 L310 286 L310 465 L230 380 Z" fill="#5BDBD5" fill-opacity=".12"/>
+          <path d="M310 286 L390 190 L390 380 L310 465 Z" fill="#8374F5" fill-opacity=".18"/>
+          <path d="M310 105V465M230 190L310 286L390 190" stroke="#ECF4FF" stroke-opacity=".35"/>
+          <path class="route route-core" d="M310 286 C370 307 411 342 454 369 C499 397 541 409 590 409" stroke="#E8EEFF" stroke-width="2" filter="url(#glow)"/>
+          <g class="network-node node-a"><circle cx="35" cy="112" r="4" fill="#64F4DB"/><circle cx="35" cy="112" r="10" stroke="#64F4DB" stroke-opacity=".23"/></g>
+          <g class="network-node node-b"><circle cx="35" cy="321" r="4" fill="#8B7CFF"/><circle cx="35" cy="321" r="10" stroke="#8B7CFF" stroke-opacity=".23"/></g>
+          <g class="network-node node-c"><circle cx="78" cy="485" r="4" fill="#D5D6FF"/><circle cx="78" cy="485" r="10" stroke="#D5D6FF" stroke-opacity=".23"/></g>
+          <g class="network-node node-d"><circle cx="580" cy="152" r="4" fill="#D5D6FF"/><circle cx="580" cy="152" r="10" stroke="#D5D6FF" stroke-opacity=".23"/></g>
+          <g class="network-node node-e"><circle cx="580" cy="436" r="4" fill="#64F4DB"/><circle cx="580" cy="436" r="10" stroke="#64F4DB" stroke-opacity=".23"/></g>
+          <g class="asset-tag tag-usdc"><rect x="4" y="87" width="58" height="22" rx="11" fill="#0B1225" stroke="#64F4DB" stroke-opacity=".35"/><text x="15" y="102" fill="#B9FFF2" font-size="9" font-family="DM Mono">USDC</text></g>
+          <g class="asset-tag tag-base"><rect x="1" y="342" width="62" height="22" rx="11" fill="#0B1225" stroke="#8B7CFF" stroke-opacity=".35"/><text x="12" y="357" fill="#C9C5FF" font-size="9" font-family="DM Mono">BASE</text></g>
+          <g class="asset-tag tag-arb"><rect x="526" y="119" width="69" height="22" rx="11" fill="#0B1225" stroke="#D5D6FF" stroke-opacity=".35"/><text x="537" y="134" fill="#E0E1FF" font-size="9" font-family="DM Mono">ARBITRUM</text></g>
+          <g class="asset-tag tag-out"><rect x="522" y="446" width="73" height="22" rx="11" fill="#0B1225" stroke="#64F4DB" stroke-opacity=".35"/><text x="533" y="461" fill="#B9FFF2" font-size="9" font-family="DM Mono">RECEIVE</text></g>
+        </svg>
+        <div class="visual-center"><img src="/logo.svg" alt="" width="42" height="42"><span>PRISM<br>ROUTING</span></div>
+      </div>
+    </section>
+
+    <section class="signal-strip"><div class="container signal-inner"><span>ASSET CONVERSION</span><i></i><span>PAYMENT ROUTING</span><i></i><span>CROSS-CHAIN TRANSFERS</span><i></i><span>ONE EXPERIENCE</span></div></section>
+
+    <section class="problem section-block" id="problem" aria-labelledby="problem-title">
+      <div class="container problem-grid">
+        <div class="section-intro"><div class="eyebrow">The problem</div><h2 id="problem-title">Crypto payments have too many moving parts.</h2><p>A simple payment can become a chain of swaps, bridges, gas management, approvals, and confirmations. PrismPay is being designed to coordinate the journey into something easier to follow.</p></div>
+        <div class="fragment-map" aria-label="A fragmented payment journey simplified into one coordinated route">
+          <div class="map-caption"><span>Today</span><span>One payment</span><span>Many steps</span></div>
+          <div class="fragment-list"><div class="fragment-item"><b>01</b><span>Find the right asset</span><em>swap</em></div><div class="fragment-item"><b>02</b><span>Move to another network</span><em>bridge</em></div><div class="fragment-item"><b>03</b><span>Get gas + approve</span><em>authorize</em></div><div class="fragment-item"><b>04</b><span>Confirm every step</span><em>track</em></div></div>
+          <div class="unified-route"><div class="route-orbit"></div><div class="route-prism"><img src="/logo.svg" alt=""></div><div><strong>One coordinated flow</strong><small>Conversion · routing · status</small></div></div>
         </div>
       </div>
-      <div class="brand-sculpture" aria-hidden="true"><div class="sculpture-grid"></div><div class="metal-frame frame-back"></div><div class="metal-frame frame-front"></div><img src="/logo.svg" alt=""><span>VALUE. CONNECTED.</span></div>
     </section>
-    <div class="principle-strip" aria-label="Platform principles"><span>Discover with clarity</span><span>Verify every payment</span><span>Track every order</span><span>Your keys stay yours</span></div>
-    <section class="vision-section" id="vision"><div><p class="eyebrow">THE PAYNEXIS VISION</p><h2>Value meets<br>possibility.</h2></div><p>Discover products and services from verified merchants. Review clear pricing and delivery requirements. Transact only through supported, configured payment methods. Robinhood Chain is our initial on-chain network focus; network transactions remain unavailable until verified and tested.</p></section>
-    <section class="feature-grid" aria-label="Commerce principles">
-      <article class="panel"><span class="index">01 / DISCOVER</span><h3>Considered commerce.</h3><p>A real catalog, managed by authorized operators. Only published listings from verified, active merchants appear.</p></article>
-      <article class="panel"><span class="index">02 / TRANSACT</span><h3>Verification first.</h3><p>Available methods are shown in the application. An order is recorded only after trusted payment verification.</p></article>
-      <article class="panel"><span class="index">03 / RECEIVE</span><h3>A clear next step.</h3><p>Every eligible listing explains delivery. Account holders can track their own orders, receipts, and fulfillment.</p></article>
+
+    <section class="section-block approach" id="approach" aria-labelledby="approach-title">
+      <div class="container"><div class="section-heading-row"><div><div class="eyebrow">The PrismPay approach</div><h2 id="approach-title">One payment experience.<br><em>Multiple possibilities.</em></h2></div><p>Infrastructure is complex. The experience should feel considered, clear, and coordinated.</p></div>
+        <div class="feature-grid">
+          <article class="feature-card feature-wide"><div class="card-top"><span class="feature-index">01</span><span class="geometric-icon icon-merge"></span></div><h3>Unified Payments</h3><p>A simpler way to initiate supported crypto payments without manually navigating multiple unrelated tools.</p><span class="card-arrow">↗</span></article>
+          <article class="feature-card"><div class="card-top"><span class="feature-index">02</span><span class="geometric-icon icon-convert"></span></div><h3>Convert &amp; Pay</h3><p>Pay with one supported asset while a recipient receives another, when a compatible route is available.</p><span class="card-arrow">↗</span></article>
+          <article class="feature-card"><div class="card-top"><span class="feature-index">03</span><span class="geometric-icon icon-route"></span></div><h3>Cross-Chain Routing</h3><p>Coordinate compatible networks through suitable execution infrastructure, reducing steps to manage yourself.</p><span class="card-arrow">↗</span></article>
+          <article class="feature-card feature-wide"><div class="card-top"><span class="feature-index">04</span><span class="geometric-icon icon-detail"></span></div><h3>Transparent Execution</h3><p>Make relevant fees, estimated output, route details, and transaction status easier to understand before and after a payment.</p><span class="card-arrow">↗</span></article>
+        </div>
+      </div>
     </section>
-    <section class="community-banner"><div><p class="eyebrow">BUILD THE NEXT CHAPTER</p><h2>For the things<br>worth connecting.</h2><p>Bring a product, a service, or a new perspective to Paynexis.</p></div><div class="actions"><a class="button primary" href="https://t.me/paynexislabs" target="_blank" rel="noopener noreferrer">Talk to the community ↗</a><a class="text-link" href="/whitepaper.html">Read the whitepaper ↗</a></div></section>
+
+    <section class="flow-section section-block" id="flow" aria-labelledby="flow-title">
+      <div class="container flow-grid"><div class="flow-copy"><div class="eyebrow">How it could work</div><h2 id="flow-title">From one asset to another.<br><em>Fewer steps.</em></h2><p>Imagine paying from the assets you already hold while the recipient receives the supported asset they need. PrismPay is being designed to coordinate the process through a clearer payment flow.</p><button class="button button-primary flow-button" id="flow-button" type="button" aria-expanded="false">Explore Example Flow <span>↓</span></button><p class="flow-disclaimer">Illustrative payment flow. Actual routes, fees, output, and supported networks will depend on available integrations and liquidity.</p></div>
+        <div class="payment-panel" id="payment-panel"><div class="panel-bar"><span><i class="panel-dot"></i>PRISMPAY / EXAMPLE</span><span>NOT A LIVE QUOTE</span></div><div class="payment-steps"><div class="payment-card"><div class="payment-label"><span class="step-badge">01</span><span>You pay</span></div><div class="payment-value">100 <small>USDC</small></div><div class="select-row"><span class="coin coin-usdc">$</span><span>USD Coin</span><span class="select-value">Base <b>⌄</b></span></div></div><div class="route-connector"><div class="connector-line"><span></span><span></span><span></span></div><div class="connector-label"><img src="/logo.svg" alt=""> PrismPay routing</div></div><div class="payment-card receive"><div class="payment-label"><span class="step-badge violet">02</span><span>Recipient receives</span></div><div class="payment-value">98.50 <small>USDT</small></div><div class="select-row"><span class="coin coin-usdt">₮</span><span>Tether USD</span><span class="select-value">Arbitrum <b>⌄</b></span></div></div></div><div class="breakdown"><div><span>Conversion and routing</span><b>Example</b></div><div><span>Network costs</span><b>Depends on route</b></div><div><span>Final received amount</span><b>Depends on execution</b></div></div><div class="panel-note">i <span>Illustrative amount only — not a live quote or a promise of the actual amount received.</span></div></div>
+      </div>
+    </section>
+
+    <section class="section-block how-section" id="how-it-works" aria-labelledby="how-title"><div class="container"><div class="section-heading-row"><div><div class="eyebrow">The intended journey</div><h2 id="how-title">Complex infrastructure.<br><em>A simpler experience.</em></h2></div><p>Actual functionality will depend on supported routes and released integrations.</p></div><div class="timeline"><article><div class="timeline-num">01</div><div><h3>Set your payment</h3><p>Choose the payment amount, source asset, recipient, and supported destination preferences.</p></div></article><article><div class="timeline-num">02</div><div><h3>Review the route</h3><p>PrismPay aims to identify compatible execution options and present relevant details, including estimated output, fees, and transaction requirements.</p></div></article><article><div class="timeline-num">03</div><div><h3>Authorize and track</h3><p>Where implemented, review and authorize the transaction, then follow its status through the available transaction information.</p></div></article></div></div></section>
+
+    <section class="section-block real-world" aria-labelledby="real-title"><div class="container"><div class="center-heading"><div class="eyebrow">Designed for real-world payments</div><h2 id="real-title">Built around how people move money.</h2><p>PrismPay is building toward useful payment infrastructure for the people and products that depend on digital value moving clearly.</p></div><div class="audience-grid"><article><span class="audience-number">01</span><h3>For Individuals</h3><p>Simplify transfers between supported assets and networks.</p><span class="audience-arrow">↗</span></article><article><span class="audience-number">02</span><h3>For Businesses</h3><p>Explore better ways for merchants and service providers to request and accept digital asset payments over time.</p><span class="audience-arrow">↗</span></article><article><span class="audience-number">03</span><h3>For Developers</h3><p>Work toward payment tools and integrations that applications can use to support crypto transactions.</p><span class="audience-arrow">↗</span></article></div></div></section>
+
+    <section class="principles section-block" aria-labelledby="principles-title"><div class="container principles-grid"><div><div class="eyebrow">Our principles</div><h2 id="principles-title">Useful by design.<br><em>Clear by default.</em></h2></div><div class="principle-list"><article><span class="principle-mark">◇</span><div><h3>Simplicity</h3><p>Reduce unnecessary steps in the payment process.</p></div></article><article><span class="principle-mark">/</span><div><h3>Transparency</h3><p>Make relevant fees, expected output, and transaction details understandable.</p></div></article><article><span class="principle-mark">⊙</span><div><h3>Reliability</h3><p>Prioritize compatible routes and dependable execution infrastructure.</p></div></article><article><span class="principle-mark">□</span><div><h3>User control</h3><p>Keep transaction authorization explicit and communicate blockchain risks.</p></div></article></div></div></section>
+
+    <section class="vision" id="vision" aria-labelledby="vision-title"><div class="vision-rays" aria-hidden="true"></div><div class="container vision-content"><div class="eyebrow">The vision</div><h2 id="vision-title">Make crypto easier to use,<br><em>not harder to understand.</em></h2><p>The future of crypto payments should not require users to understand every bridge, token, and blockchain just to move value. PrismPay aims to connect supported assets and networks through a more unified payment experience.</p><p>We are building toward a world where digital value can move with fewer unnecessary obstacles.</p></div></section>
+
+    <section class="roadmap section-block" aria-labelledby="roadmap-title"><div class="container"><div class="section-heading-row"><div><div class="eyebrow">Planned development direction</div><h2 id="roadmap-title">The route ahead.</h2></div><p>A considered path from foundation to payment infrastructure.</p></div><div class="roadmap-grid"><article><span>01</span><div class="roadmap-line"></div><h3>Foundation</h3><p>Establish the platform architecture and core payment experience.</p></article><article><span>02</span><div class="roadmap-line"></div><h3>Core Payments</h3><p>Develop supported payment flows and wallet connectivity.</p></article><article><span>03</span><div class="roadmap-line"></div><h3>Conversion &amp; Routing</h3><p>Introduce suitable asset-conversion infrastructure and progressively expand supported execution routes.</p></article><article><span>04</span><div class="roadmap-line"></div><h3>Payment Infrastructure</h3><p>Explore payment links, QR codes, merchant tools, and developer integrations.</p></article></div></div></section>
+
+    <section class="community section-block" id="community" aria-labelledby="community-title"><div class="container community-card"><div><div class="eyebrow">Stay connected</div><h2 id="community-title">Follow what<br><em>we're building.</em></h2><p>PrismPay is building toward a simpler payment experience for the crypto ecosystem. Follow the journey, join the discussion, and stay connected as we share updates.</p></div><div class="community-actions"><a class="social-link" href="https://t.me/prismpayy" target="_blank" rel="noopener noreferrer"><span>Join Telegram</span><b>↗</b></a><a class="social-link" href="https://x.com/prismpayxyz?s=11" target="_blank" rel="noopener noreferrer"><span>Follow on X</span><b>↗</b></a></div></div></section>
+
+    <section class="closing"><div class="closing-shape" aria-hidden="true"></div><div class="container closing-content"><div class="eyebrow">Product coming soon</div><h2>A simpler way to<br><em>move value is coming.</em></h2><p>PrismPay is building toward a more unified experience for crypto payments, asset conversion, and cross-chain transfers.</p><a class="button button-primary" href="https://t.me/prismpayy" target="_blank" rel="noopener noreferrer">Join the Community <span>↗</span></a></div></section>
   </main>
-  <footer><a class="brand" href="/">PAYNEXIS</a><span>Commerce, Powered On-Chain.</span><a href="/whitepaper.html">Documentation</a><a href="/auth/login">Operator sign-in</a><span>© 2026 Paynexis Labs</span></footer>
-</body></html>
+
+  <footer class="site-footer"><div class="container footer-top"><div class="footer-brand"><a class="brand" href="#top"><img src="/logo.svg" alt="" width="34" height="34"><span>Prism<span>Pay</span></span></a><p>Building a unified experience for crypto payments and cross-chain value movement.</p></div><div class="footer-col"><strong>Explore</strong><a href="#how-it-works">How It Works</a><a href="#approach">What We're Building</a><a href="#vision">Vision</a></div><div class="footer-col"><strong>Connect</strong><a href="https://t.me/prismpayy" target="_blank" rel="noopener noreferrer">Telegram ↗</a><a href="https://x.com/prismpayxyz?s=11" target="_blank" rel="noopener noreferrer">X ↗</a></div></div><div class="container footer-bottom"><span>© 2026 PrismPay</span><p>PrismPay is under development. Features, integrations, and supported routes may change.</p></div></footer>
+</body>
+</html>
